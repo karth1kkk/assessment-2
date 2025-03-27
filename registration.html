@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulah - Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-weight: 400;
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            margin: 0 auto;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            padding: 40px 60px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .logo {
+            color: #FF6B00;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .title {
+            margin-top: -20px;
+            color: #666666;
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #666666;
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #666666;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #333;
+            font-weight: 300;
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+            font-weight: 300;
+        }
+
+        .date-inputs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .date-inputs input {
+            flex: 1;
+            text-align: center;
+        }
+
+        .error-message {
+            color: #FF0000;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .continue-button {
+            background-color: #FF6B00;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 21px;
+            font-size: 15px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .continue-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .footer-wrapper {
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .footer a {
+            color: #155094;
+            text-decoration: none;
+        }
+
+        hr {
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        .checkbox-group label {
+            color: #666666;
+            font-size: 14px;
+            margin: 0;
+            font-weight: 300;
+        }
+
+        hr {
+            width: 100%;
+            margin-top: -20;
+            max-width: 640px;
+            margin: 0 auto;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">MULAH</div>
+        <h1 class="title">Registration</h1>
+        <p class="subtitle">Please fill up your details.</p>
+        
+        <form id="registrationForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter Name">
+                <div class="error-message" id="name-error">*Please insert a name.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="birthday">Birthday</label>
+                <div class="date-inputs">
+                    <input type="text" id="day" placeholder="DD" maxlength="2">
+                    <input type="text" id="month" placeholder="MM" maxlength="2">
+                    <input type="text" id="year" placeholder="YYYY" maxlength="4">
+                </div>
+                <div class="error-message" id="birthday-error">*Please insert your birthday.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Email Address">
+                <div class="error-message" id="email-error">*Please insert a valid email address.</div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="no-email" name="no-email">
+                    <label for="no-email">No email address</label>
+                </div>
+            </div>
+
+            <button type="submit" class="continue-button">Continue</button>
+        </form>
+    </div>
+    <div class="footer-wrapper">
+        <hr>
+        <div class="footer">
+            Powered by <a href="https://MulahRewards.com">MulahRewards.com</a>
+        </div>
+    </div>
+
+    <script>
+        // Input validation for date fields
+        const dayInput = document.getElementById('day');
+        const monthInput = document.getElementById('month');
+        const yearInput = document.getElementById('year');
+
+        function validateNumberInput(input, min, max) {
+            input.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                const value = parseInt(this.value);
+                if (value < min || value > max) {
+                    this.setCustomValidity('Invalid value');
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+        }
+
+        validateNumberInput(dayInput, 1, 31);
+        validateNumberInput(monthInput, 1, 12);
+        validateNumberInput(yearInput, 1900, new Date().getFullYear());
+
+        // Hide all errors initially
+        function hideAllErrors() {
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(error => error.style.display = 'none');
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => input.classList.remove('error'));
+        }
+
+        // Hide errors initially
+        hideAllErrors();
+
+        function showError(elementId) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.style.display = 'block';
+            const inputId = elementId.replace('-error', '');
+            const inputElement = document.getElementById(inputId);
+            if (inputElement) {
+                inputElement.classList.add('error');
+            }
+        }
+
+        function hideError(elementId) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.style.display = 'none';
+            const inputId = elementId.replace('-error', '');
+            const inputElement = document.getElementById(inputId);
+            if (inputElement) {
+                inputElement.classList.remove('error');
+            }
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Add input event listeners to validate in real-time
+        document.getElementById('name').addEventListener('input', function() {
+            if (this.value.trim()) {
+                hideError('name-error');
+            }
+        });
+
+        const emailInput = document.getElementById('email');
+        const noEmailCheckbox = document.getElementById('no-email');
+
+        emailInput.addEventListener('input', function() {
+            if (this.value && validateEmail(this.value)) {
+                hideError('email-error');
+            }
+            noEmailCheckbox.checked = false;
+        });
+
+        noEmailCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                emailInput.value = '';
+                emailInput.disabled = true;
+                hideError('email-error');
+            } else {
+                emailInput.disabled = false;
+            }
+        });
+
+        [dayInput, monthInput, yearInput].forEach(input => {
+            input.addEventListener('input', function() {
+                if (dayInput.value && monthInput.value && yearInput.value) {
+                    hideError('birthday-error');
+                }
+            });
+        });
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const noEmail = document.getElementById('no-email').checked;
+            const day = dayInput.value;
+            const month = monthInput.value;
+            const year = yearInput.value;
+
+            let isValid = true;
+
+            // Reset all errors first
+            hideAllErrors();
+
+            // Name validation
+            if (!name.trim()) {
+                showError('name-error');
+                isValid = false;
+            }
+
+            // Birthday validation
+            if (!day || !month || !year) {
+                showError('birthday-error');
+                isValid = false;
+            }
+
+            // Email validation
+            if (!noEmail && (!email || !validateEmail(email))) {
+                showError('email-error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                return;
+            }
+
+            // Store form data
+            const formData = {
+                name: name,
+                birthday: `${day}/${month}/${year}`,
+                email: noEmail ? null : email
+            };
+
+            // Store in sessionStorage
+            sessionStorage.setItem('userData', JSON.stringify(formData));
+
+            // Redirect to summary page
+            window.location.href = 'summary.html';
+        }
+    </script>
+</body>
+</html> 

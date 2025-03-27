@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulah - Welcome</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;   
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-weight: 400;
+
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            margin: 0 auto;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .container {
+            padding: 40px 60px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin: 15px;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: #FF6B00;
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 60px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: 800;
+        }
+
+        .welcome-text {
+            color: #666666;
+            font-size: 42px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #FF6B00;
+            font-size: 20px;
+            margin-bottom: 40px;
+            font-weight: normal;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .input-container {
+            display: flex;
+            margin-bottom: 30px;
+            overflow: visible;
+            position: relative;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .country-code-container {
+            position: relative;
+        }
+
+        .country-code {
+            padding: 20px;
+            color: #666;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #FF6B00;
+            cursor: pointer;
+            gap: 5px;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            font-family: inherit;
+        }
+
+        .country-code::after {
+            content: "▼";
+            font-size: 12px;
+            color: #666;
+            margin-left: 2px;
+        }
+
+        .country-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+            width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .country-dropdown.show {
+            display: block;
+        }
+
+        .country-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            color: #666;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .country-option:hover {
+            background-color: #f5f5f5;
+        }
+
+        .phone-input {
+            flex: 1;
+            padding: 20px;
+            border: none;
+            font-size: 15px;
+            color: #666;
+            outline: none;
+            padding-right: 50px;
+            margin-left: 20px;
+            border-bottom: 1px solid #FF6B00;
+        }
+
+        .phone-input::placeholder {
+            color: #999;
+        }
+
+        .check-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ccc;
+            transition: background-color 0.3s ease;
+        }
+
+        .check-icon::before {
+            content: "✓";
+            color: white;
+            font-size: 16px;
+        }
+
+        .check-icon.valid {
+            background-color: #4CAF50;
+        }
+
+        .check-button {
+            background-color: #FF6B00;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+            bottom: 0;
+        }
+
+        .footer a {
+            color: #155094;
+            text-decoration: none;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        hr {
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">MULAH</div>
+        <h1 class="welcome-text">Hello,<br>Welcome !</h1>
+        <p class="subtitle">Check Your Loyalty Points & Rewards</p>
+        
+        <div class="input-container">
+            <div class="country-code-container">
+                <button class="country-code">+60</button>
+                <div class="country-dropdown">
+                    <div class="country-option" data-code="+60">Malaysia (+60)</div>
+                    <div class="country-option" data-code="+65">Singapore (+65)</div>
+                    <div class="country-option" data-code="+62">Indonesia (+62)</div>
+                    <div class="country-option" data-code="+66">Thailand (+66)</div>
+                    <div class="country-option" data-code="+63">Philippines (+63)</div>
+                    <div class="country-option" data-code="+84">Vietnam (+84)</div>
+                    <div class="country-option" data-code="+95">Myanmar (+95)</div>
+                    <div class="country-option" data-code="+855">Cambodia (+855)</div>
+                    <div class="country-option" data-code="+856">Laos (+856)</div>
+                </div>
+            </div>
+            <input type="tel" class="phone-input" placeholder="Enter your mobile number" maxlength="10">
+            <div class="check-icon"></div>
+        </div>
+        <div class="error-message" id="error-msg">Invalid phone number. Please try again.</div>
+        
+        <button class="check-button">Check Loyalty Points</button>
+    </div>
+    <hr>
+    <div class="footer">
+        Powered by <a href="https://MulahRewards.com">MulahRewards.com</a>
+    </div>
+
+    <script>
+        const phoneInput = document.querySelector('.phone-input');
+        const errorMsg = document.getElementById('error-msg');
+        const checkIcon = document.querySelector('.check-icon');
+        const countryCodeBtn = document.querySelector('.country-code');
+        const dropdown = document.querySelector('.country-dropdown');
+        const countryOptions = document.querySelectorAll('.country-option');
+        const validNumber = "173527250";
+
+        // Toggle dropdown
+        countryCodeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            dropdown.classList.remove('show');
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        dropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Handle country selection
+        countryOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const code = option.getAttribute('data-code');
+                countryCodeBtn.textContent = code;
+                dropdown.classList.remove('show');
+            });
+        });
+
+        phoneInput.addEventListener('input', function(e) {
+            // Allow only numbers
+            this.value = this.value.replace(/[^0-9]/g, '');
+            
+            // Hide error message when user starts typing again
+            errorMsg.style.display = 'none';
+
+            // Update check icon color
+            if (this.value === validNumber) {
+                checkIcon.classList.add('valid');
+            } else {
+                checkIcon.classList.remove('valid');
+            }
+        });
+
+        document.querySelector('.check-button').addEventListener('click', function() {
+            const phoneNumber = phoneInput.value;
+            
+            if (phoneNumber === validNumber) {
+                // Store the phone number in sessionStorage
+                sessionStorage.setItem('phoneNumber', countryCodeBtn.textContent + phoneNumber);
+                // Redirect to registration page
+                window.location.href = 'registration.html';
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulah - Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-weight: 400;
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            margin: 0 auto;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            padding: 40px 60px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .logo {
+            color: #FF6B00;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .title {
+            color: #666666;
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .subtitle {
+            color: #666666;
+            font-size: 16px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .summary-section {
+            margin-bottom: 30px;
+        }
+
+        .summary-label {
+            color: #666666;
+            font-size: 16px;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .summary-value {
+            color: #333333;
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .continue-button {
+            background-color: #FF6B00;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 32px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            font-weight: 400;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .footer-wrapper {
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .footer a {
+            color: #155094;
+            text-decoration: none;
+        }
+
+        hr {
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">MULAH</div>
+        <h1 class="title">Summary</h1>
+        <p class="subtitle">Please verify your details below.</p>
+
+        <div class="summary-section">
+            <div class="summary-label">Name</div>
+            <div class="summary-value" id="name-value">-</div>
+        </div>
+
+        <div class="summary-section">
+            <div class="summary-label">Birthday</div>
+            <div class="summary-value" id="birthday-value">-</div>
+        </div>
+
+        <div class="summary-section">
+            <div class="summary-label">Email</div>
+            <div class="summary-value" id="email-value">-</div>
+        </div>
+
+        <a href="registration.html" class="continue-button">Edit Details</a>
+    </div>
+    <div class="footer-wrapper">
+        <hr>
+        <div class="footer">
+            Powered by <a href="https://MulahRewards.com">MulahRewards.com</a>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve and display user data
+        window.addEventListener('DOMContentLoaded', () => {
+            const userData = JSON.parse(sessionStorage.getItem('userData'));
+            if (userData) {
+                document.getElementById('name-value').textContent = userData.name || '-';
+                document.getElementById('birthday-value').textContent = userData.birthday || '-';
+                document.getElementById('email-value').textContent = userData.email || 'No email provided';
+            }
+        });
+    </script>
+</body>
+</html> 
